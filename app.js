@@ -23,7 +23,13 @@ window.onload = () => {
     let bgImg = new Background(ctx)
     let obstaclesId = null;
     let obstaclesArray = [];
+    let bonusId = null;
+    let bonusArray = [];
 
+    climber.src = '/assets/climber-images.png';
+    climber.onload = function () {
+        window.requestAnimationFrame(gameLoop);
+    };
 
 
 
@@ -39,9 +45,8 @@ window.onload = () => {
     function keyUpListner(event) {
         keyPresses[event.key] = false;
     }
-
+    //obstacle load
     obstaclesId = setInterval(function () {
-
         let obstacle = new Obstacle(
             ctx, //canvas context
             Math.random() * canvas.width - 200, //position X
@@ -49,18 +54,24 @@ window.onload = () => {
             Math.ceil(Math.random() * 3) //speed
         );
         // score.points += 10;
-
         obstaclesArray.push(obstacle);
     }, 2000);
+    //bonus load
+    bonusId = setInterval(function () {
+
+        let bonus = new Bonus(
+            ctx, //canvas context
+            Math.random() * canvas.width - 200, //position X
+            0, //position Y
+            Math.ceil(Math.random() * 3) //speed
+        );
+        bonusArray.push(bonus);
+    }, 5000);
 
 
 
-    //load character
 
-    climber.src = '/assets/climber-images.png';
-    climber.onload = function () {
-        window.requestAnimationFrame(gameLoop);
-    };
+
     function checkCollisions(obstacle) {
 
         let crash =
@@ -68,16 +79,12 @@ window.onload = () => {
             positionX + scaledWidth > obstacle.x &&
             positionY < obstacle.y + obstacle.height &&
             positionY + scaledHeight > obstacle.y;
-        // i think the object collides at the top left corner, not on the climber.
-
-
-
 
         if (crash) {
 
             console.log("crash")
-            cancelAnimationFrame(frameCount);
             clearInterval(obstaclesId);
+            cancelAnimationFrame(frameCount);
             // alert('Crashed! Game over');
             window.location.reload();
         }
@@ -98,14 +105,19 @@ window.onload = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         bgImg.draw()
-
+        // pushes to obstacle array
         obstaclesArray.forEach((eachObstacle) => {
-
             eachObstacle.draw();
             eachObstacle.move();
             checkCollisions(eachObstacle);
-
         });
+        bonusArray.forEach((eachBonus) => {
+            eachBonus.draw();
+            eachBonus.move();
+            // checkCollisions(eachObstacle);
+        });
+
+
 
 
         let hasMoved = false;
