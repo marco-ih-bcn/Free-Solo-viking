@@ -51,23 +51,9 @@ window.onload = () => {
         // score.points += 10;
 
         obstaclesArray.push(obstacle);
-    }, 650);
+    }, 2000);
 
-    function checkCollisions(character, obstacle) {
-        let crash =
-            character.positionX < obstacle.posX + obstacle.width &&
-            character.positionX + character.width > obstacle.posX &&
-            character.positionY < obstacle.posY + obstacle.height &&
-            character.positionY + character.height > obstacle.posY;
 
-        if (crash) {
-            console.log("crash")
-            cancelAnimationFrame(frameCount);
-            clearInterval(obstaclesId);
-            // alert('Crashed! Game over');
-            window.location.reload();
-        }
-    }
 
     //load character
 
@@ -75,6 +61,25 @@ window.onload = () => {
     climber.onload = function () {
         window.requestAnimationFrame(gameLoop);
     };
+    function checkCollisions(climber, obstacle) {
+
+        let crash =
+            climber.x < obstacle.x + obstacle.width &&
+            climber.x + scaledWidth > obstacle.x &&
+            climber.y < obstacle.y + obstacle.height &&
+            climber.y + scaledHeight > obstacle.y;
+        //now crashes when far away..
+        // i think the object collides at the top left corner, not on the climber.
+
+        if (crash) {
+
+            console.log("crash")
+            // cancelAnimationFrame(frameCount);
+            // clearInterval(obstaclesId);
+            // alert('Crashed! Game over');
+            // window.location.reload();
+        }
+    }
 
 
     // draws the image frame for animation
