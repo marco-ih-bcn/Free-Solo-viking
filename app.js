@@ -1,11 +1,10 @@
-
 window.onload = () => {
     //all const variables
-    // const scale = 2;
-    // const width = 113;
-    // const height = 292;
-    // const scaledWidth = width / scale;
-    // const scaledHeight = height / scale;
+    const scale = 2;
+    const width = 113;
+    const height = 292;
+    const scaledWidth = width / scale;
+    const scaledHeight = height / scale;
     const cycleLoop = [0, 1, 0, 1];
     const movementSpeed = 2;
     const frameLimit = 12
@@ -15,93 +14,74 @@ window.onload = () => {
     let canvas = document.querySelector('canvas');
     let ctx = canvas.getContext('2d');
     let currentLoopIndex = 0;
-    let frameCount = 0;
+    let frameCount = null;
     let currentDirection = 0;
     let keyPresses = {}
-    let positionX = 280;
+    let positionX = 250;
     let positionY = 450;
+    let climber = new Image();
     let bgImg = new Background(ctx)
-    //inistialise character class
-    let character = new Character(ctx, positionX, positionY)
-    // let obstaclesId = null;
+    let obstaclesId = null;
     let obstaclesArray = [];
+
+
+
+
 
 
     // let background = new Background(ctx)
     //event listeners
     window.addEventListener('keydown', keyDownListner, false);
-
-
     function keyDownListner(event) {
-        console.log()
-        switch (event.key) {
-            case "w":
-                character.move(0, -movementSpeed);
-                hasMoved = true;
-                break;
-            case "s":
-                character.move(0, movementSpeed); hasMoved = true;
-                break;
-            case "a":
-                character.move(-movementSpeed, 0); hasMoved = true;
-                break;
-            case 'd':
-                character.move(movementSpeed, 0);
-                hasMoved = true;
-                break;
-        }
-
-
+        keyPresses[event.key] = true;
     }
     window.addEventListener('keyup', keyUpListner, false);
     function keyUpListner(event) {
-        console.log(event.key)
         keyPresses[event.key] = false;
     }
 
     obstaclesId = setInterval(function () {
+
         let obstacle = new Obstacle(
             ctx, //canvas context
             Math.random() * canvas.width - 200, //position X
             0, //position Y
-            Math.ceil(Math.random() * 5) //speed
+            Math.ceil(Math.random() * 3) //speed
         );
+        // score.points += 10;
+
         obstaclesArray.push(obstacle);
-    }, 1000);
+    }, 650);
 
-    // function checkCollision(character, obstacle) {
-    //     let collision =
-    //         character.positionX < obstacle.x + obstacle.width &&
-    //         character.positionX + character.width > obstacle.x &&
-    //         character.positionX < obstacle.y + obstacle.height &&
-    //         character.positionY + character.height > obstacle.y;
+    function checkCollisions(character, obstacle) {
+        let crash =
+            character.x < obstacle.x + obstacle.width && //check the right side of the car
+            character.x + character.width > obstacle.x &&
+            character.y < obstacle.y + obstacle.height &&
+            character.y + character.height > obstacle.y;
 
-
-
-
-
-    // }
-
+        if (crash) {
+            cancelAnimationFrame(frameCount);
+            clearInterval(obstaclesId);
+            // alert('Crashed! Game over');
+            window.location.reload();
+        }
+    }
 
     //load character
 
-    // // img.src = '/assets/climber-images.png';
-    // character.onload = function () {
-    //     window.requestAnimationFrame(gameLoop);
-    // };
-    // // img.src = '/assets/climber-images.png';
-    // bgImg.onload = function () {
-    //     console.log('load')
-    //     window.requestAnimationFrame(gameLoop);
-    // };
+    climber.src = '/assets/climber-images.png';
+    climber.onload = function () {
+        window.requestAnimationFrame(gameLoop);
+    };
 
 
     // draws the image frame for animation
-    // function drawFrame(frameX, frameY, canvasX, canvasY) {
-    //     ctx.drawImage(img,
-    //         frameX * width, frameY * height, width, height,
-    //         canvasX, canvasY, scaledWidth, scaledHeight);
-    // }
+    function drawFrame(frameX, frameY, canvasX, canvasY) {
+        ctx.drawImage(climber,
+            frameX * width, frameY * height, width, height,
+            canvasX, canvasY, scaledWidth, scaledHeight);
+    }
 
 
 
@@ -110,34 +90,30 @@ window.onload = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         bgImg.draw()
-        //charcter draw function
-        character.draw(cycleLoop[currentLoopIndex], currentDirection, positionX, positionY);
-        window.requestAnimationFrame(gameLoop);
-
 
         obstaclesArray.forEach((eachObstacle) => {
+
             eachObstacle.draw();
             eachObstacle.move();
+            checkCollisions(climber, eachObstacle);
 
         });
 
 
         let hasMoved = false;
-        // console.log(keyPresses.w)
-        // if (keyPresses.w) {
-        //     character.move(0, -movementSpeed);
-        //     hasMoved = true;
-        // } else if (keyPresses.s) {
-        //     character.move(0, movementSpeed); hasMoved = true;
-        // }
-        // if (keyPresses.a) {
-        //     character.move(-movementSpeed, 0); hasMoved = true;
-        // } else if (keyPresses.d) {
-        //     character.move(movementSpeed, 0);
-        //     hasMoved = true;
-        // }
 
-
+        if (keyPresses.ArrowUp) {
+            moveCharacter(0, -movementSpeed);
+            hasMoved = true;
+        } else if (keyPresses.ArrowDown) {
+            moveCharacter(0, movementSpeed); hasMoved = true;
+        }
+        if (keyPresses.ArrowLeft) {
+            moveCharacter(-movementSpeed, 0); hasMoved = true;
+        } else if (keyPresses.ArrowRight) {
+            moveCharacter(movementSpeed, 0);
+            hasMoved = true;
+        }
 
         if (hasMoved) {
             frameCount++;
@@ -150,20 +126,26 @@ window.onload = () => {
             }
         }
 
+        drawFrame(cycleLoop[currentLoopIndex], currentDirection, positionX, positionY);
+        window.requestAnimationFrame(gameLoop);
 
 
     }
-    gameLoop()
-    // // move character function stops the character from leaving the canvas
-    // // function moveCharacter(deltaX, deltaY) {
-    // //     if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
-    // //         positionX += deltaX;
-    // //     }
-    // //     if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
-    // //         positionY += deltaY;
-    // //     }
+    // move character function stops the character from leaving the canvas
+    function moveCharacter(deltaX, deltaY) {
+        if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
+            console.log(positionX)
+            positionX += deltaX;
+        }
+        if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
+            console.log(positionY)
+            positionY += deltaY;
+        }
 
-    // }
+    }
+
+
+
 
 
 

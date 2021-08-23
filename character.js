@@ -24,17 +24,6 @@ class Character {
             canvasX, canvasY, this.scaledWidth, this.scaledHeight);
     }
 
-    move(deltaX, deltaY) {
-        console.log('character move')
-        if (this.positionX + deltaX > 0 && this.positionX + this.scaledWidth + deltaX < this.ctx.width) {
-            console.log('29')
-            this.positionX += deltaX;
-        }
-        if (this.positionY + deltaY > 0 && this.positionY + this.scaledHeight + deltaY < this.ctx.height) {
-            console.log('33')
-            this.positionY += deltaY;
-        }
 
 
-    }
 }
