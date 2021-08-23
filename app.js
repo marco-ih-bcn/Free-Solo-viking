@@ -11,7 +11,7 @@ window.onload = () => {
 
 
     //all let variable 
-    let canvas = document.querySelector('canvas');
+    let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
     let currentLoopIndex = 0;
     let frameCount = null;
@@ -41,7 +41,7 @@ window.onload = () => {
     }
 
     obstaclesId = setInterval(function () {
-
+        console.log('obstacle load')
         let obstacle = new Obstacle(
             ctx, //canvas context
             Math.random() * canvas.width - 200, //position X

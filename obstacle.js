@@ -5,8 +5,8 @@ obstacleImg.src = '/assets/face-boulder.png'
 class Obstacle {
     constructor(canvasContext, posX, posY, speed) {
         this.ctx = canvasContext,
-            this.posX = posX,
-            this.posY = posY,
+            this.x = posX,
+            this.y = posY,
             this.width = 50,
             this.height = 50,
             this.speed = speed
