@@ -3,10 +3,10 @@ const obstacleImg = document.createElement('img')
 obstacleImg.src = '/assets/face-boulder.png'
 
 class Obstacle {
-    constructor(canvasContext, positionX, positionY, speed) {
+    constructor(canvasContext, posX, posY, speed) {
         this.ctx = canvasContext,
-            this.x = positionX,
-            this.y = positionY,
+            this.posX = posX,
+            this.posY = posY,
             this.width = 50,
             this.height = 50,
             this.speed = speed

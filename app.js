@@ -55,12 +55,13 @@ window.onload = () => {
 
     function checkCollisions(character, obstacle) {
         let crash =
-            character.x < obstacle.x + obstacle.width && //check the right side of the car
-            character.x + character.width > obstacle.x &&
-            character.y < obstacle.y + obstacle.height &&
-            character.y + character.height > obstacle.y;
+            character.positionX < obstacle.posX + obstacle.width &&
+            character.positionX + character.width > obstacle.posX &&
+            character.positionY < obstacle.posY + obstacle.height &&
+            character.positionY + character.height > obstacle.posY;
 
         if (crash) {
+            console.log("crash")
             cancelAnimationFrame(frameCount);
             clearInterval(obstaclesId);
             // alert('Crashed! Game over');
