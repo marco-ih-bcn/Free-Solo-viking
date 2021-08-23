@@ -41,7 +41,7 @@ window.onload = () => {
     }
 
     obstaclesId = setInterval(function () {
-        console.log('obstacle load')
+
         let obstacle = new Obstacle(
             ctx, //canvas context
             Math.random() * canvas.width - 200, //position X
@@ -61,23 +61,25 @@ window.onload = () => {
     climber.onload = function () {
         window.requestAnimationFrame(gameLoop);
     };
-    function checkCollisions(climber, obstacle) {
+    function checkCollisions(obstacle) {
 
         let crash =
-            climber.x < obstacle.x + obstacle.width &&
-            climber.x + scaledWidth > obstacle.x &&
-            climber.y < obstacle.y + obstacle.height &&
-            climber.y + scaledHeight > obstacle.y;
-        //now crashes when far away..
+            positionX < obstacle.x + obstacle.width &&
+            positionX + scaledWidth > obstacle.x &&
+            positionY < obstacle.y + obstacle.height &&
+            positionY + scaledHeight > obstacle.y;
         // i think the object collides at the top left corner, not on the climber.
+
+
+
 
         if (crash) {
 
             console.log("crash")
-            // cancelAnimationFrame(frameCount);
-            // clearInterval(obstaclesId);
+            cancelAnimationFrame(frameCount);
+            clearInterval(obstaclesId);
             // alert('Crashed! Game over');
-            // window.location.reload();
+            window.location.reload();
         }
     }
 
@@ -101,22 +103,22 @@ window.onload = () => {
 
             eachObstacle.draw();
             eachObstacle.move();
-            checkCollisions(climber, eachObstacle);
+            checkCollisions(eachObstacle);
 
         });
 
 
         let hasMoved = false;
 
-        if (keyPresses.ArrowUp) {
+        if (keyPresses.w) {
             moveCharacter(0, -movementSpeed);
             hasMoved = true;
-        } else if (keyPresses.ArrowDown) {
+        } else if (keyPresses.s) {
             moveCharacter(0, movementSpeed); hasMoved = true;
         }
-        if (keyPresses.ArrowLeft) {
+        if (keyPresses.a) {
             moveCharacter(-movementSpeed, 0); hasMoved = true;
-        } else if (keyPresses.ArrowRight) {
+        } else if (keyPresses.d) {
             moveCharacter(movementSpeed, 0);
             hasMoved = true;
         }
@@ -140,7 +142,7 @@ window.onload = () => {
     // move character function stops the character from leaving the canvas
     function moveCharacter(deltaX, deltaY) {
         if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
-            console.log(positionX)
+
             positionX += deltaX;
         }
         if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
