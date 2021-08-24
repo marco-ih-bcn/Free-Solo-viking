@@ -109,7 +109,9 @@ window.onload = () => {
             // checkCollisions(eachObstacle);
         });
 
-        character.draw(character.cycleLoop[character.currentLoopIndex], character.currentDirection, character.positionX, character.positionY);
+        // Actually, we do not need to pass anything to this function from here.
+        // All the paramas are available insisde the class
+        character.draw();
         character.move()
 
 
