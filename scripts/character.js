@@ -21,7 +21,7 @@ class Character {
         this.frameCount = 0;
         this.currentLoopIndex = 0;
         this.cycleLoop = [0, 1, 0, 1];
-        this.frameLimit = 12;
+        this.frameLimit = 15;
     }
 
 
@@ -36,13 +36,13 @@ class Character {
     }
 
     move() {
+
         if (this.keyPresses.w) {
             this.positionY += -1;
             this.hasMoved = true;
         } else if (this.keyPresses.w === false) {
             this.hasMoved = false
         }
-
         if (this.keyPresses.d) {
             this.positionX += 1;
             this.hasMoved = true;
@@ -61,6 +61,7 @@ class Character {
         } else if (!this.keyPresses.a === false) {
             this.hasMoved = false
         }
+
 
 
 

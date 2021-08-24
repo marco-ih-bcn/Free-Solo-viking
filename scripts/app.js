@@ -11,15 +11,6 @@ window.onload = () => {
     let bonusId = null;
     let bonusArray = [];
 
-    // climber.src = '/assets/climber-images.png';
-    // climber.onload = function () {
-    //     window.requestAnimationFrame(gameLoop);
-    // };
-
-
-
-
-
 
     window.addEventListener('keydown', keyDownListner, false);
     function keyDownListner(event) {
@@ -58,29 +49,28 @@ window.onload = () => {
 
     function checkCollisions(obstacle) {
 
-        // let crash =
-        //     positionX < obstacle.x + obstacle.width &&
-        //     positionX + scaledWidth > obstacle.x &&
-        //     positionY < obstacle.y + obstacle.height &&
-        //     positionY + scaledHeight > obstacle.y;
+        let crash =
+            character.positionX < obstacle.x + obstacle.width &&
+            character.positionX + character.scaledWidth > obstacle.x &&
+            character.positionY < obstacle.y + obstacle.height &&
+            character.positionY + character.scaledHeight > obstacle.y;
 
-        // if (crash) {
+        if (crash) {
 
-        //     console.log("crash")
-        //     clearInterval(obstaclesId);
-        //     cancelAnimationFrame(frameCount);
-        //     // alert('Crashed! Game over');
-        //     window.location.reload();
-        // }
+            console.log("crash")
+            clearInterval(obstaclesId);
+            cancelAnimationFrame(frameCount);
+            // alert('Crashed! Game over');
+            window.location.reload();
+        }
     }
 
 
-    // game loop
+
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         bgImg.draw()
-        // pushes to obstacle array
+
         obstaclesArray.forEach((eachObstacle) => {
             eachObstacle.draw();
             eachObstacle.move();
@@ -94,16 +84,8 @@ window.onload = () => {
 
         character.draw();
         character.move()
-
         window.requestAnimationFrame(gameLoop);
-
     }
     gameLoop()
-
-    // >>>>> ALL the following code
-    // >>>>> has to go into the .move() method of the character class
-
-    // // move character function stops the character from leaving the canvas
-
 
 }
