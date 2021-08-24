@@ -17,7 +17,6 @@ class Character {
         this.scaledHeight = this.height * this.scale;
         this.hasMoved = false;
         this.keyPresses = {}
-        //properties added for if(hasMoved) in draw function
         this.currentDirection = 0;
         this.frameCount = 0;
         this.currentLoopIndex = 0;
@@ -31,10 +30,6 @@ class Character {
         const frameX = this.cycleLoop[this.currentLoopIndex]
         const frameY = this.currentDirection
 
-
-
-
-        // this.positionX & this.positionY = NaN
         this.ctx.drawImage(characterImg,
             frameX * this.width, frameY * this.height, this.width, this.height,
             this.positionX, this.positionY, this.scaledWidth, this.scaledHeight);
@@ -43,14 +38,28 @@ class Character {
     move() {
         if (this.keyPresses.w) {
             this.positionY += -1;
+            this.hasMoved = true;
+        } else if (this.keyPresses.w === false) {
+            this.hasMoved = false
         }
+
         if (this.keyPresses.d) {
             this.positionX += 1;
+            this.hasMoved = true;
+        } else if (this.keyPresses.d === false) {
+            this.hasMoved = false
         }
         if (this.keyPresses.s) {
             this.positionY += 1;
-        } else if (this.keyPresses.a) {
+            this.hasMoved = true;
+        } else if (!this.keyPresses.s === false) {
+            this.hasMoved = false
+        }
+        if (this.keyPresses.a) {
             this.positionX += -1;
+            this.hasMoved = true;
+        } else if (!this.keyPresses.a === false) {
+            this.hasMoved = false
         }
 
 
@@ -65,12 +74,35 @@ class Character {
                 }
             }
         }
+
+
+        if (this.positionY > canvas.height - this.scaledHeight) {
+            console.log('out bottom')
+            this.positionY = canvas.height - this.scaledHeight
+
+        }
+        if (this.positionY < canvas.height - canvas.height) {
+            console.log('out top')
+            this.positionY = 0
+        }
+
+        if (this.positionX > canvas.width - this.scaledWidth) {
+            console.log('out right')
+            this.positionX = canvas.width - this.scaledWidth
+        }
+
+        if (this.positionX < canvas.width - canvas.width) {
+            console.log('out left')
+            this.positionX = 0
+        }
+
+
     }
 
 
 
 
-    // set deltaX and deltaY to pick up key presses
+
 
 
 }

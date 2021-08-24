@@ -1,25 +1,9 @@
 window.onload = () => {
-    //all const variables
-    const scale = 2;
-    const width = 113;
-    const height = 292;
-    const scaledWidth = width / scale;
-    const scaledHeight = height / scale;
-    // const cycleLoop = [0, 1, 0, 1];
-    // const movementSpeed = 2;
-    // const frameLimit = 12
-
 
     //all let variable 
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
-    // let currentLoopIndex = 0;
     let frameCount = null;
-    // 
-    let keyPresses = {}
-    let positionX = 250;
-    let positionY = 450;
-    // let climber = new Image();
     let character = new Character(ctx, 250, 450)
     let bgImg = new Background(ctx)
     let obstaclesId = null;
@@ -36,17 +20,16 @@ window.onload = () => {
 
 
 
-    // let background = new Background(ctx)
-    //event listeners
+
     window.addEventListener('keydown', keyDownListner, false);
     function keyDownListner(event) {
         character.keyPresses[event.key] = true;
     }
-    window.addEventListener('keyup', keyUpListner, false);
+    window.addEventListener('keyup', keyUpListner, true);
     function keyUpListner(event) {
         character.keyPresses[event.key] = false;
     }
-    //obstacle load
+
     obstaclesId = setInterval(function () {
         let obstacle = new Obstacle(
             ctx, //canvas context
@@ -95,7 +78,7 @@ window.onload = () => {
     // game loop
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        character.draw();
+
         bgImg.draw()
         // pushes to obstacle array
         obstaclesArray.forEach((eachObstacle) => {
@@ -112,9 +95,6 @@ window.onload = () => {
         character.draw();
         character.move()
 
-
-
-
         window.requestAnimationFrame(gameLoop);
 
     }
@@ -124,16 +104,6 @@ window.onload = () => {
     // >>>>> has to go into the .move() method of the character class
 
     // // move character function stops the character from leaving the canvas
-    // function moveCharacter(deltaX, deltaY) {
-    //     if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
 
-    //         positionX += deltaX;
-    //     }
-    //     if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
-    //         console.log(positionY)
-    //         positionY += deltaY;
-    //     }
-
-    // }
 
 }
