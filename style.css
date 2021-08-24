@@ -1,34 +1,72 @@
+
+
 canvas {
     border: 1px solid black;
     margin:  auto;
-    display: none;
+    display: flex;
     border-radius: 1.5em;
   }
 
   body {
     background-color: #457b9d;
   
-  
-  
+  }
+
+  #game-page {
+    display: none;
+  }
+
+  .image-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  #start-button {
+      text-decoration: none;
+      color: black;
+      border: 2px solid black;
+      background: none;
+      font-size: 28px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-family: 'Rampart One';
+      text-transform: uppercase;
   }
 
   .bg-cloud {
-  width: 500px;
+  width: 100%;
   position: absolute;
   z-index: -1;
-  
   }
 
+
   #start-page{
-    margin: 0 auto;
+    margin: 50px auto;
+    font-family:'Rampart One' ;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
-    border: 2px solid darkblue;
+    background-color: #a9d6e5;
+    border: 2px solid #457b9d;
     border-radius: 1em;
     width: 500px;
     height: 500px;
+  }
 
+  #start-page h3{
+    margin-left: 40px;
+  }
+
+  #start-page li{
+    list-style-type: none;
+  }
+
+  h1{
+    font-size: 3rem;
+    margin-top: 0;
   }

@@ -10,6 +10,20 @@ window.onload = () => {
     let obstaclesArray = [];
     let bonusId = null;
     let bonusArray = [];
+    let startButton = document.getElementById('start-button')
+    let startPage = document.getElementById('start-page')
+    let gamePage = document.getElementById('game-page')
+
+    function start() {
+        startPage.style.display = 'none'
+        gamePage.style.display = 'block'
+    }
+    startButton.addEventListener('click', () => {
+        start()
+    })
+
+
+
 
 
     window.addEventListener('keydown', keyDownListner, false);

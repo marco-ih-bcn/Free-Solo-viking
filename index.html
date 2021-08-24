@@ -7,6 +7,13 @@
         content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="/style.css">
     <title>free solo
@@ -19,20 +26,29 @@
         alt=""
         class="s">
     <!-- Start Page -->
-    <img class="bg-cloud"
-        src="/assets/cloud.png"
-        alt="">
+    <div class="image-container">
+        <img class="bg-cloud"
+            src="/assets/cloud.png"
+            alt="">
+
+    </div>
     <section id="start-page">
 
         <h1>Free Solo Viking</h1>
         <div>
-            <p>instructions</p>
+            <h3>instructions</h3>
+            <ul>
+                <li>scale the wall using the W,A,S and D keys.</li>
+                <li>Avoid falling rocks, they will make you fall...And you dont have a rope.</li>
+                <li>Collect the chalk, it will stop your hands from getting sweaty, and give you bonus points!</li>
+            </ul>
         </div>
-        <a href="#">Start!</a>
+        <a id="start-button"
+            href="#">Start!</a>
 
     </section>
     <!-- Game Page -->
-    <section id="game-page not-active">
+    <section id="game-page">
         <div id="game-container">
             <canvas id="canvas"
                 width="600"
