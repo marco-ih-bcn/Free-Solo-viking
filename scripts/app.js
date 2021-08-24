@@ -20,7 +20,7 @@ window.onload = () => {
     let positionX = 250;
     let positionY = 450;
     // let climber = new Image();
-    let character = new Character(ctx, positionX, positionY)
+    let character = new Character(ctx, 250, 450)
     let bgImg = new Background(ctx)
     let obstaclesId = null;
     let obstaclesArray = [];
@@ -40,11 +40,11 @@ window.onload = () => {
     //event listeners
     window.addEventListener('keydown', keyDownListner, false);
     function keyDownListner(event) {
-        keyPresses[event.key] = true;
+        character.keyPresses[event.key] = true;
     }
     window.addEventListener('keyup', keyUpListner, false);
     function keyUpListner(event) {
-        keyPresses[event.key] = false;
+        character.keyPresses[event.key] = false;
     }
     //obstacle load
     obstaclesId = setInterval(function () {

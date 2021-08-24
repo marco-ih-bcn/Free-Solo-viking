@@ -5,7 +5,7 @@ characterImg.src = '/assets/climber-images.png';
 
 class Character {
     constructor(canvasContext, positionX, positionY) {
-        this.characterImg = characterImg;
+
         this.ctx = canvasContext;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -35,32 +35,42 @@ class Character {
 
 
         // this.positionX & this.positionY = NaN
-        this.ctx.drawImage(this.characterImg,
+        this.ctx.drawImage(characterImg,
             frameX * this.width, frameY * this.height, this.width, this.height,
             this.positionX, this.positionY, this.scaledWidth, this.scaledHeight);
-
-
-        // if (this.hasMoved) {
-        //     this.frameCount++;
-        //     if (this.frameCount >= this.frameLimit) {
-        //         this.frameCount = 0;
-        //         this.currentLoopIndex++
-        //         if (this.currentLoopIndex >= this.cycleLoop.length) {
-        //             this.currentLoopIndex = 0;
-        //         }
-        //     }
-        // }
-
-
     }
 
-    // Let's try to write te move() method here in the character.
-    // You can copypaste code that makes the character move from the app.js file
-    move(deltaX, deltaY) {
-        this.positionX += deltaX;
-        this.positionY += deltaY;
-        this.hasMoved = true;
+    move() {
+        if (this.keyPresses.w) {
+            this.positionY += -1;
+        }
+        if (this.keyPresses.d) {
+            this.positionX += 1;
+        }
+        if (this.keyPresses.s) {
+            this.positionY += 1;
+        } else if (this.keyPresses.a) {
+            this.positionX += -1;
+        }
+
+
+
+        if (this.hasMoved) {
+            this.frameCount++;
+            if (this.frameCount >= this.frameLimit) {
+                this.frameCount = 0;
+                this.currentLoopIndex++
+                if (this.currentLoopIndex >= this.cycleLoop.length) {
+                    this.currentLoopIndex = 0;
+                }
+            }
+        }
     }
+
+
+
+
+    // set deltaX and deltaY to pick up key presses
 
 
 }
