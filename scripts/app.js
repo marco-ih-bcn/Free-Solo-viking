@@ -119,10 +119,13 @@ window.onload = () => {
 
 
 
-
+// >>>>>> ALL the following code has to go into the .move() method
+// >>>>>> of the character class
         let hasMoved = false;
 
         if (keyPresses.w) {
+            // >>>>> this function call will become character.move()
+            // >>>>> after the refactoring if the character class
             moveCharacter(0, -movementSpeed);
             hasMoved = true;
         } else if (keyPresses.s) {
@@ -146,11 +149,18 @@ window.onload = () => {
             }
         }
 
+        //>>>>> The drawFrame is a character method and needs to go there
         drawFrame(cycleLoop[currentLoopIndex], currentDirection, positionX, positionY);
+       
+       
         window.requestAnimationFrame(gameLoop);
 
 
     }
+
+// >>>>> ALL the following code
+// >>>>> has to go into the .move() method of the character class
+
     // move character function stops the character from leaving the canvas
     function moveCharacter(deltaX, deltaY) {
         if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
