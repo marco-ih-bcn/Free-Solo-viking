@@ -5,31 +5,32 @@ window.onload = () => {
     const height = 292;
     const scaledWidth = width / scale;
     const scaledHeight = height / scale;
-    const cycleLoop = [0, 1, 0, 1];
-    const movementSpeed = 2;
-    const frameLimit = 12
+    // const cycleLoop = [0, 1, 0, 1];
+    // const movementSpeed = 2;
+    // const frameLimit = 12
 
 
     //all let variable 
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
-    let currentLoopIndex = 0;
+    // let currentLoopIndex = 0;
     let frameCount = null;
-    let currentDirection = 0;
+    // let currentDirection = 0;
     let keyPresses = {}
     let positionX = 250;
     let positionY = 450;
-    let climber = new Image();
+    // let climber = new Image();
+    let character = new Character(ctx, 250, 450)
     let bgImg = new Background(ctx)
     let obstaclesId = null;
     let obstaclesArray = [];
     let bonusId = null;
     let bonusArray = [];
 
-    climber.src = '/assets/climber-images.png';
-    climber.onload = function () {
-        window.requestAnimationFrame(gameLoop);
-    };
+    // climber.src = '/assets/climber-images.png';
+    // climber.onload = function () {
+    //     window.requestAnimationFrame(gameLoop);
+    // };
 
 
 
@@ -91,15 +92,6 @@ window.onload = () => {
     }
 
 
-    // draws the image frame for animation
-    function drawFrame(frameX, frameY, canvasX, canvasY) {
-        ctx.drawImage(climber,
-            frameX * width, frameY * height, width, height,
-            canvasX, canvasY, scaledWidth, scaledHeight);
-    }
-
-
-
     // game loop
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -117,66 +109,31 @@ window.onload = () => {
             // checkCollisions(eachObstacle);
         });
 
+        character.draw(character.cycleLoop[character.currentLoopIndex], character.currentDirection, character.positionX, character.positionY);
+        character.move()
 
 
-// >>>>>> ALL the following code has to go into the .move() method
-// >>>>>> of the character class
-        let hasMoved = false;
 
-        if (keyPresses.w) {
-            // >>>>> this function call will become character.move()
-            // >>>>> after the refactoring if the character class
-            moveCharacter(0, -movementSpeed);
-            hasMoved = true;
-        } else if (keyPresses.s) {
-            moveCharacter(0, movementSpeed); hasMoved = true;
-        }
-        if (keyPresses.a) {
-            moveCharacter(-movementSpeed, 0); hasMoved = true;
-        } else if (keyPresses.d) {
-            moveCharacter(movementSpeed, 0);
-            hasMoved = true;
-        }
 
-        if (hasMoved) {
-            frameCount++;
-            if (frameCount >= frameLimit) {
-                frameCount = 0;
-                currentLoopIndex++
-                if (currentLoopIndex >= cycleLoop.length) {
-                    currentLoopIndex = 0;
-                }
-            }
-        }
-
-        //>>>>> The drawFrame is a character method and needs to go there
-        drawFrame(cycleLoop[currentLoopIndex], currentDirection, positionX, positionY);
-       
-       
         window.requestAnimationFrame(gameLoop);
 
-
     }
+    gameLoop()
 
-// >>>>> ALL the following code
-// >>>>> has to go into the .move() method of the character class
+    // >>>>> ALL the following code
+    // >>>>> has to go into the .move() method of the character class
 
-    // move character function stops the character from leaving the canvas
-    function moveCharacter(deltaX, deltaY) {
-        if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
+    // // move character function stops the character from leaving the canvas
+    // function moveCharacter(deltaX, deltaY) {
+    //     if (positionX + deltaX > 0 && positionX + scaledWidth + deltaX < canvas.width) {
 
-            positionX += deltaX;
-        }
-        if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
-            console.log(positionY)
-            positionY += deltaY;
-        }
+    //         positionX += deltaX;
+    //     }
+    //     if (positionY + deltaY > 0 && positionY + scaledHeight + deltaY < canvas.height) {
+    //         console.log(positionY)
+    //         positionY += deltaY;
+    //     }
 
-    }
-
-
-
-
-
+    // }
 
 }
