@@ -24,6 +24,11 @@ class Character {
             canvasX, canvasY, this.scaledWidth, this.scaledHeight);
     }
 
+    // Let's try to write te move() method here in the character.
+    // You can copypaste code that makes the character move from the app.js file
+    move(){
+
+    }
 
 
 }
