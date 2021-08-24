@@ -1,10 +1,11 @@
 const characterImg = document.createElement('img');
-
 characterImg.src = '/assets/climber-images.png';
+
+
 
 class Character {
     constructor(canvasContext, positionX, positionY) {
-
+        this.characterImg = characterImg;
         this.ctx = canvasContext;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -14,10 +15,10 @@ class Character {
         this.height = 292;
         this.scaledWidth = this.width * this.scale;
         this.scaledHeight = this.height * this.scale;
-        // this.color = 'black'
         this.hasMoved = false;
         this.keyPresses = {}
         //properties added for if(hasMoved) in draw function
+        this.currentDirection = 0;
         this.frameCount = 0;
         this.currentLoopIndex = 0;
         this.cycleLoop = [0, 1, 0, 1];
@@ -25,48 +26,40 @@ class Character {
     }
 
 
-    draw(frameX, frameY, canvasX, canvasY) {
-        this.ctx.drawImage(characterImg,
+    draw() {
+
+        const frameX = this.cycleLoop[this.currentLoopIndex]
+        const frameY = this.currentDirection
+
+
+
+
+        // this.positionX & this.positionY = NaN
+        this.ctx.drawImage(this.characterImg,
             frameX * this.width, frameY * this.height, this.width, this.height,
-            canvasX, canvasY, this.scaledWidth, this.scaledHeight);
+            this.positionX, this.positionY, this.scaledWidth, this.scaledHeight);
 
 
+        // if (this.hasMoved) {
+        //     this.frameCount++;
+        //     if (this.frameCount >= this.frameLimit) {
+        //         this.frameCount = 0;
+        //         this.currentLoopIndex++
+        //         if (this.currentLoopIndex >= this.cycleLoop.length) {
+        //             this.currentLoopIndex = 0;
+        //         }
+        //     }
+        // }
 
-        if (this.hasMoved) {
-            this.frameCount++;
-            if (this.frameCount >= this.frameLimit) {
-                this.frameCount = 0;
-                this.currentLoopIndex++
-                if (this.currentLoopIndex >= this.cycleLoop.length) {
-                    this.currentLoopIndex = 0;
-                }
-            }
-        }
-        //what to do with this vvvv
 
     }
 
     // Let's try to write te move() method here in the character.
     // You can copypaste code that makes the character move from the app.js file
     move(deltaX, deltaY) {
-
-        if (this.keyPresses.w) {
-            this.positionX -= deltaX;
-            hasMoved = true;
-        } else if (this.keyPresses.s) {
-            this.positionX += deltaX;
-            hasMoved = true;
-        }
-        if (this.keyPresses.a) {
-            this.positionY -= deltaY;
-            hasMoved = true;
-        } else if (this.keyPresses.d) {
-            this.positionY -= deltaY;;
-            hasMoved = true;
-        }
-
-
-        //>>>>> The drawFrame is a character method and needs to go there
+        this.positionX += deltaX;
+        this.positionY += deltaY;
+        this.hasMoved = true;
     }
 
 

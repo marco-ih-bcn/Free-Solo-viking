@@ -15,12 +15,12 @@ window.onload = () => {
     let ctx = canvas.getContext('2d');
     // let currentLoopIndex = 0;
     let frameCount = null;
-    // let currentDirection = 0;
+    // 
     let keyPresses = {}
     let positionX = 250;
     let positionY = 450;
     // let climber = new Image();
-    let character = new Character(ctx, 250, 450)
+    let character = new Character(ctx, positionX, positionY)
     let bgImg = new Background(ctx)
     let obstaclesId = null;
     let obstaclesArray = [];
@@ -75,27 +75,27 @@ window.onload = () => {
 
     function checkCollisions(obstacle) {
 
-        let crash =
-            positionX < obstacle.x + obstacle.width &&
-            positionX + scaledWidth > obstacle.x &&
-            positionY < obstacle.y + obstacle.height &&
-            positionY + scaledHeight > obstacle.y;
+        // let crash =
+        //     positionX < obstacle.x + obstacle.width &&
+        //     positionX + scaledWidth > obstacle.x &&
+        //     positionY < obstacle.y + obstacle.height &&
+        //     positionY + scaledHeight > obstacle.y;
 
-        if (crash) {
+        // if (crash) {
 
-            console.log("crash")
-            clearInterval(obstaclesId);
-            cancelAnimationFrame(frameCount);
-            // alert('Crashed! Game over');
-            window.location.reload();
-        }
+        //     console.log("crash")
+        //     clearInterval(obstaclesId);
+        //     cancelAnimationFrame(frameCount);
+        //     // alert('Crashed! Game over');
+        //     window.location.reload();
+        // }
     }
 
 
     // game loop
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+        character.draw();
         bgImg.draw()
         // pushes to obstacle array
         obstaclesArray.forEach((eachObstacle) => {
@@ -109,7 +109,7 @@ window.onload = () => {
             // checkCollisions(eachObstacle);
         });
 
-        character.draw(character.cycleLoop[character.currentLoopIndex], character.currentDirection, character.positionX, character.positionY);
+        character.draw();
         character.move()
 
 
