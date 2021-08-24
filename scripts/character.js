@@ -25,10 +25,15 @@ class Character {
     }
 
 
-    draw(frameX, frameY, canvasX, canvasY) {
+    draw() {
+
+        // >>>>> I simplified the fucntion using propertie taht we hava available on the class
+        const frameX = character.cycleLoop[character.currentLoopIndex]
+        const frameY = character.currentDirection
+
         this.ctx.drawImage(characterImg,
             frameX * this.width, frameY * this.height, this.width, this.height,
-            canvasX, canvasY, this.scaledWidth, this.scaledHeight);
+            character.positionX, character.positionY, this.scaledWidth, this.scaledHeight);
 
 
 
