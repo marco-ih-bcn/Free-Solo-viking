@@ -1,17 +1,4 @@
 
-
-canvas {
-    border: 1px solid black;
-    margin:  auto;
-    display: flex;
-    border-radius: 1.5em;
-  }
-
-  body {
-    background-color: #457b9d;
-  
-  }
-
   #game-page {
     display: none;
   }
@@ -23,12 +10,10 @@ canvas {
     justify-content: center;
   }
 
-
   #start-button {
-    
       text-decoration: none;
-      color: magenta;
-      border: 2px solid magenta;
+      color: #e5383b;
+      border: 2px solid #e5383b;
       background: none;
       font-size: 28px;
       border-radius: 3px;
@@ -43,7 +28,6 @@ canvas {
   position: absolute;
   z-index: -1;
   }
-
 
   #start-page{
     margin: 50px auto;
@@ -70,4 +54,21 @@ canvas {
   h1{
     font-size: 3rem;
     margin-top: 0;
+  }
+
+    canvas {
+  border: 1px solid black;
+  margin:  auto;
+  display: flex;
+  border-radius: 1.5em;
+  }
+
+  body {
+  background-color: #457b9d;
+
+  }
+
+  #controls {
+    color: #e5383b;
+    font-weight: bolder;
   }

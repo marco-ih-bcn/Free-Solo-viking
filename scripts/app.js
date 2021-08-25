@@ -1,11 +1,5 @@
 window.onload = () => {
-
-    function start() {
-        startPage.style.display = 'none'
-        gamePage.style.display = 'block'
-    }
-
-    //all let variable 
+    //variables 
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
     let frameCount = null;
@@ -18,7 +12,6 @@ window.onload = () => {
     let startButton = document.getElementById('start-button')
     let startPage = document.getElementById('start-page')
     let gamePage = document.getElementById('game-page')
-    //score
     const score = {
         points: 0,
         draw: function () {
@@ -27,11 +20,30 @@ window.onload = () => {
             ctx.fillText('Score: ' + this.points, 300, 580);
         }
     };
-
-
+    //event listners
     startButton.addEventListener('click', () => {
         start()
         gameLoop()
+        obstaclesId = setInterval(function () {
+            let obstacle = new Obstacle(
+                ctx,
+                Math.random() * canvas.width,
+                0,
+                Math.ceil(Math.random() * 3)
+            );
+            score.points += 1;
+            obstaclesArray.push(obstacle);
+        }, 2000);
+        bonusId = setInterval(function () {
+            let bonus = new Bonus(
+                ctx,
+                Math.random() * canvas.width,
+                0,
+                Math.ceil(Math.random() * 4)
+            );
+            bonusArray.push(bonus);
+        }, 6000);
+
     })
     window.addEventListener('keydown', keyDownListner, false);
     function keyDownListner(event) {
@@ -41,74 +53,41 @@ window.onload = () => {
     function keyUpListner(event) {
         character.keyPresses[event.key] = false;
     }
-
-    obstaclesId = setInterval(function () {
-        let obstacle = new Obstacle(
-            ctx, //canvas context
-            Math.random() * canvas.width, //position X
-            0, //position Y
-            Math.ceil(Math.random() * 3) //speed
-        );
-        score.points += 1;
-        obstaclesArray.push(obstacle);
-    }, 2000);
-
-
-    bonusId = setInterval(function () {
-
-        let bonus = new Bonus(
-            ctx, //canvas context
-            Math.random() * canvas.width, //position X
-            0, //position Y
-            Math.ceil(Math.random() * 4) //speed
-        );
-        bonusArray.push(bonus);
-    }, 6000);
-
-
-
+    //functions
+    function start() {
+        startPage.style.display = 'none'
+        gamePage.style.display = 'block'
+    }
     function bonusCheck(bonus) {
         let bonusContact =
             character.positionX < bonus.x + bonus.width &&
             character.positionX + character.scaledWidth > bonus.x &&
             character.positionY < bonus.y + bonus.height &&
             character.positionY + character.scaledHeight > bonus.y;
-
         if (bonusContact) {
             bonusArray.splice(bonus, 1)
             score.points += 10
         }
     }
 
-
-
-
     function checkCollisions(obstacle) {
-
         let obstacleCollision =
             character.positionX < obstacle.x + obstacle.width &&
             character.positionX + character.scaledWidth > obstacle.x &&
             character.positionY < obstacle.y + obstacle.height &&
             character.positionY + character.scaledHeight > obstacle.y;
-
-
         if (obstacleCollision) {
             obstaclesArray.splice(obstacle, 1)
             clearInterval(obstaclesId);
             cancelAnimationFrame(frameCount);
-            //go to game over page!
             window.location.reload();
         }
-
     }
-
-
 
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bgImg.draw()
         score.draw();
-
         obstaclesArray.forEach((eachObstacle) => {
             eachObstacle.draw();
             eachObstacle.move();
@@ -119,13 +98,9 @@ window.onload = () => {
             eachBonus.move();
             bonusCheck(eachBonus);
         });
-
         character.draw();
         character.move()
         window.requestAnimationFrame(gameLoop);
-
-
     }
-
 
 }

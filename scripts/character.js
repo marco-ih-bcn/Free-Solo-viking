@@ -40,7 +40,7 @@ class Character {
         if (this.keyPresses.w) {
             this.positionY += -1;
             this.hasMoved = true;
-        } else if (this.keyPresses.w === false) {
+        } else if (!this.keyPresses.w) {
             this.hasMoved = false
         }
         if (this.keyPresses.d) {
