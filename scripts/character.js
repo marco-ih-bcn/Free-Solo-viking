@@ -1,5 +1,5 @@
 const characterImg = document.createElement('img');
-characterImg.src = '/assets/climber-images.png';
+characterImg.src = 'assets/climber-images.png';
 
 
 
