@@ -1,5 +1,10 @@
 window.onload = () => {
 
+    function start() {
+        startPage.style.display = 'none'
+        gamePage.style.display = 'block'
+    }
+
     //all let variable 
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -14,18 +19,11 @@ window.onload = () => {
     let startPage = document.getElementById('start-page')
     let gamePage = document.getElementById('game-page')
 
-    function start() {
-        startPage.style.display = 'none'
-        gamePage.style.display = 'block'
-    }
+
     startButton.addEventListener('click', () => {
         start()
+        gameLoop()
     })
-
-
-
-
-
     window.addEventListener('keydown', keyDownListner, false);
     function keyDownListner(event) {
         character.keyPresses[event.key] = true;
@@ -45,7 +43,7 @@ window.onload = () => {
         // score.points += 10;
         obstaclesArray.push(obstacle);
     }, 2000);
-    //bonus load
+
     bonusId = setInterval(function () {
 
         let bonus = new Bonus(
@@ -55,28 +53,42 @@ window.onload = () => {
             Math.ceil(Math.random() * 3) //speed
         );
         bonusArray.push(bonus);
-    }, 5000);
+    }, 6000);
 
+
+
+    function bonusCheck(bonus) {
+        let bonusContact =
+            character.positionX < bonus.x + bonus.width &&
+            character.positionX + character.scaledWidth > bonus.x &&
+            character.positionY < bonus.y + bonus.height &&
+            character.positionY + character.scaledHeight > bonus.y;
+
+        if (bonusContact) {
+            bonusArray.splice(bonus, 1)
+        }
+    }
 
 
 
 
     function checkCollisions(obstacle) {
 
-        let crash =
+        let obstacleCollision =
             character.positionX < obstacle.x + obstacle.width &&
             character.positionX + character.scaledWidth > obstacle.x &&
             character.positionY < obstacle.y + obstacle.height &&
             character.positionY + character.scaledHeight > obstacle.y;
 
-        if (crash) {
 
-            console.log("crash")
+        if (obstacleCollision) {
+            obstaclesArray.splice(obstacle, 1)
             clearInterval(obstaclesId);
             cancelAnimationFrame(frameCount);
-            // alert('Crashed! Game over');
+            //go to game over page!
             window.location.reload();
         }
+
     }
 
 
@@ -93,13 +105,13 @@ window.onload = () => {
         bonusArray.forEach((eachBonus) => {
             eachBonus.draw();
             eachBonus.move();
-            // checkCollisions(eachObstacle);
+            bonusCheck(eachBonus);
         });
 
         character.draw();
         character.move()
         window.requestAnimationFrame(gameLoop);
     }
-    gameLoop()
+
 
 }

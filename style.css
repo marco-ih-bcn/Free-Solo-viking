@@ -25,9 +25,10 @@ canvas {
 
 
   #start-button {
+    
       text-decoration: none;
-      color: black;
-      border: 2px solid black;
+      color: magenta;
+      border: 2px solid magenta;
       background: none;
       font-size: 28px;
       border-radius: 3px;
