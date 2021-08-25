@@ -18,6 +18,15 @@ window.onload = () => {
     let startButton = document.getElementById('start-button')
     let startPage = document.getElementById('start-page')
     let gamePage = document.getElementById('game-page')
+    //score
+    const score = {
+        points: 0,
+        draw: function () {
+            ctx.font = '50px Rampart One';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Score: ' + this.points, 300, 580);
+        }
+    };
 
 
     startButton.addEventListener('click', () => {
@@ -36,21 +45,22 @@ window.onload = () => {
     obstaclesId = setInterval(function () {
         let obstacle = new Obstacle(
             ctx, //canvas context
-            Math.random() * canvas.width - 200, //position X
+            Math.random() * canvas.width, //position X
             0, //position Y
             Math.ceil(Math.random() * 3) //speed
         );
-        // score.points += 10;
+        score.points += 1;
         obstaclesArray.push(obstacle);
     }, 2000);
+
 
     bonusId = setInterval(function () {
 
         let bonus = new Bonus(
             ctx, //canvas context
-            Math.random() * canvas.width - 200, //position X
+            Math.random() * canvas.width, //position X
             0, //position Y
-            Math.ceil(Math.random() * 3) //speed
+            Math.ceil(Math.random() * 4) //speed
         );
         bonusArray.push(bonus);
     }, 6000);
@@ -66,6 +76,7 @@ window.onload = () => {
 
         if (bonusContact) {
             bonusArray.splice(bonus, 1)
+            score.points += 10
         }
     }
 
@@ -96,6 +107,7 @@ window.onload = () => {
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bgImg.draw()
+        score.draw();
 
         obstaclesArray.forEach((eachObstacle) => {
             eachObstacle.draw();
@@ -111,6 +123,8 @@ window.onload = () => {
         character.draw();
         character.move()
         window.requestAnimationFrame(gameLoop);
+
+
     }
 
 
